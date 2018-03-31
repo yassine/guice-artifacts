@@ -1,3 +1,6 @@
 before_install:
-  - mvn -version
-  - mvn -X io.takari.polyglot:polyglot-translate-plugin:0.3.0:translate -Dinput=pom.groovy -Doutput=pom.xml
+  - mvn -N io.takari:maven:wrapper -Dmaven=3.3.3
+  - ./mvnw -version
+  - ./mvnw io.takari.polyglot:polyglot-translate-plugin:0.3.0:translate -Dinput=pom.groovy -Doutput=pom.xml
+install:
+  - ./mvnw clean install
