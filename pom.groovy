@@ -3,7 +3,7 @@ project {
   modelVersion '4.0.0'
   groupId 'com.github.yassine.artifacts'
   artifactId 'guice-artifacts'
-  version '0.1.0'
+  version '0.1.1'
 
   properties {
     'deps.version.spock' '1.1-groovy-2.4'
