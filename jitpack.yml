@@ -1,2 +1,3 @@
 before_install:
-  - mvn io.takari.polyglot:polyglot-translate-plugin:0.3.0:translate -Dinput=pom.groovy -Doutput=pom.xml
+  - mvn -version
+  - mvn -X io.takari.polyglot:polyglot-translate-plugin:0.3.0:translate -Dinput=pom.groovy -Doutput=pom.xml
