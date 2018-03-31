@@ -1,0 +1,2 @@
+before_install:
+  - mvn io.takari.polyglot:polyglot-translate-plugin:0.1.15:translate -Dinput=pom.groovy -Doutput=pom.xml
