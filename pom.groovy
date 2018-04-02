@@ -1,7 +1,7 @@
 project {
 
   modelVersion '4.0.0'
-  groupId 'com.github.yassine.artifacts'
+  groupId 'com.github.yassine'
   artifactId 'guice-artifacts'
   version '0.1.1'
 
@@ -28,8 +28,7 @@ project {
     dependency 'com.fasterxml.jackson.core:jackson-databind:2.8.5'
     dependency 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.5'
     dependency 'io.github.lukehutch:fast-classpath-scanner:2.0.8'
-    dependency 'org.glassfish:javax.el:3.0.1-b08'
-    dependency 'org.hibernate.validator:hibernate-validator:6.0.5.Final'
+    dependency 'org.jgrapht:jgrapht-core:1.0.1'
     dependency 'com.google.auto.service:auto-service:1.0-rc3'
     dependency 'org.freemarker:freemarker:2.3.26-incubating'
     dependency 'com.google.guava:guava:${deps.version.guava}'
