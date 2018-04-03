@@ -21,12 +21,9 @@ class TaskSchedulerSupportSpec extends Specification {
     given:
     List<Set<Class<? extends Task>>> waves = taskScheduler.scheduleClasses(copyOf(asList(A.class, B.class, C.class, D.class, E.class)))
     expect:
-    waves.get(0).containsAll(asList(A.class, C.class))
-    waves.get(0).size() == 2
-    waves.get(1).containsAll(asList(B.class, D.class))
-    waves.get(1).size() == 2
-    waves.get(2).contains(E.class)
-    waves.get(2).size() == 1
+    waves.get(0) == [A.class, C.class] as Set
+    waves.get(1) == [B.class, D.class] as Set
+    waves.get(2) == [E.class] as Set
   }
 
   /*
@@ -51,12 +48,9 @@ class TaskSchedulerSupportSpec extends Specification {
     E e = new E()
     List<Set<Task>> waves = taskScheduler.scheduleInstances(copyOf(asList(a, b, c, d, e)))
     expect:
-    waves.get(0).containsAll(asList(a, c))
-    waves.get(0).size() == 2
-    waves.get(1).containsAll(asList(b, d))
-    waves.get(1).size() == 2
-    waves.get(2).contains(e)
-    waves.get(2).size() == 1
+    waves.get(0) == [a, c] as Set
+    waves.get(1) == [b, d] as Set
+    waves.get(2) == [e] as Set
   }
 
   def "scheduleInstances: it should throw an exception if a cycle is detected"() {
