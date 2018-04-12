@@ -14,14 +14,14 @@ class TaskSchedulerSupportSpec extends Specification {
 
   /*
      A -----> B -----> E
-                      /
+     F ---------------/
      C -----> D _____/
   */
   def "scheduleClasses : it should a list of 'waves' that includes tasks that can run in parallel"() {
     given:
-    List<Set<Class<? extends Task>>> waves = taskScheduler.scheduleClasses(copyOf(asList(A.class, B.class, C.class, D.class, E.class)))
+    List<Set<Class<? extends Task>>> waves = taskScheduler.scheduleClasses(copyOf(asList(A.class, B.class, C.class, D.class, E.class, F.class)))
     expect:
-    waves.get(0) == [A.class, C.class] as Set
+    waves.get(0) == [A.class, C.class, F.class] as Set
     waves.get(1) == [B.class, D.class] as Set
     waves.get(2) == [E.class] as Set
   }
@@ -73,6 +73,8 @@ class TaskSchedulerSupportSpec extends Specification {
   static class D implements Task {}
   @DependsOn([B.class, D.class])
   static class E implements Task {}
+  @ReverseDependsOn(E.class)
+  static class F implements Task {}
   @DependsOn(CycleC.class)
   static class CycleA implements Task {}
   @DependsOn(CycleA.class)
