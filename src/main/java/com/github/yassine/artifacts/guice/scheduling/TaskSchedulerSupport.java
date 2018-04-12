@@ -19,9 +19,17 @@ class TaskSchedulerSupport implements TaskScheduler{
 
   @SuppressWarnings("unchecked")
   public <TYPE> List<Set<Class<? extends TYPE>>> scheduleClasses(final Set<Class<? extends TYPE>> classes){
-    return schedule(classes, (clazz) -> clazz.isAnnotationPresent(DependsOn.class)
-                                ? (Set<Class<? extends TYPE>>) ImmutableSet.<Class<? extends TYPE>>copyOf(clazz.getAnnotation(DependsOn.class).value())
-                                : new HashSet<>());
+    Multimap<Class, Class> index = HashMultimap.create();
+    classes.stream()
+      .filter(clazz -> clazz.isAnnotationPresent(DependsOn.class))
+      .forEach(clazz -> index.putAll(clazz, Arrays.asList(clazz.getAnnotation(DependsOn.class).value())));
+    classes.stream()
+      .filter(clazz -> clazz.isAnnotationPresent(ReverseDependsOn.class))
+      .forEach(clazz -> Arrays.asList(clazz.getAnnotation(ReverseDependsOn.class).value())
+                          .forEach(reverse -> index.put(reverse, clazz)));
+    return schedule(classes, (clazz) -> index.containsKey(clazz)
+      ? ImmutableSet.copyOf(index.get(clazz).stream().map(dependentClass -> (Class<? extends TYPE>) dependentClass).collect(Collectors.toSet()))
+      : ImmutableSet.of());
   }
 
   public <TYPE> List<Set<TYPE >> scheduleInstances(final Set<TYPE> instances){
